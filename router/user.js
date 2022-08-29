@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
     const query = "INSERT INTO user (id,name,address,age,phone) values (?,?,?,?,?)"
     connection.query(query, [id, name, address, age, phone], (error) => {
         if (error) {
-            res.send("User Alrady Saved..!")
+            res.send("User Saved..!")
         } else {
             res.send("User Save Sucsess..!")
         }
