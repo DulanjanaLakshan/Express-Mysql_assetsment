@@ -26,19 +26,60 @@ router.get('/', (req, res) => {
     })
 })
 
-router.post('/',(req,res)=>{
-    const id=req.body.id;
-    const name=req.body.name;
-    const email=req.body.email;
-    const city=req.body.city;
-    const number=req.body.number;
+router.post('/', (req, res) => {
+    const id = req.body.id;
+    const name = req.body.name;
+    const email = req.body.email;
+    const city = req.body.city;
+    const number = req.body.number;
 
-    const query="INSERT INTO customer (id,name,email,city,number) values (?,?,?,?,?)"
-    connection.query(query,[id,name,email,city,number],(error)=>{
-        if(error){
+    const query = "INSERT INTO customer (id,name,email,city,number) values (?,?,?,?,?)"
+    connection.query(query, [id, name, email, city, number], (error) => {
+        if (error) {
             res.send("Customer Alrady Saved..!")
-        }else{
+        } else {
             res.send("Customer Save Sucsess..!")
+        }
+    })
+    console.log(req.body);
+})
+
+router.put('/', (req, res) => {
+    const id = req.body.id;
+    const name = req.body.name;
+    const email = req.body.email;
+    const city = req.body.city;
+    const number = req.body.number;
+
+    var query = "UPDATE customer SET name=?, email=?, city=?, number=? WHERE id=?";
+    connection.query(query, [name, email, city, number, id], (error, row) => {
+        if (error) throw error;
+        res.send(row)
+    })
+})
+
+router.delete('/:id', (req, res) => {
+    const id = req.params.id
+    var query = "DELETE FROM customer WHERE id=?";
+    connection.query(query, [id], (error, row) => {
+        if (error) {
+            res.send("Customer Not Found")
+        } else {
+            res.send("Customer Delete")
+            res.send(row)
+        }
+    })
+})
+
+router.get('/:id',(res,req)=>{
+    const id=req.params.id
+    var query="SELECT * FROM customer WHERE id=?";
+
+    connection.query(query[id],(error,row)=>{
+        if(error){
+            res.send("Customer Not Found")
+        }else{
+            res.send(row)
         }
     })
 })
