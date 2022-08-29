@@ -84,4 +84,4 @@ router.get('/:id',(res,req)=>{
     })
 })
 
-module.exports = router47
+module.exports = router
